@@ -67,6 +67,8 @@ We added "_orig" at the end of image datasets (train and test) because we are go
 
 Each line of your train_set_x_orig and test_set_x_orig is an array representing an image. You can visualize an example by running the following code. Feel free also to change the `index` value and re-run to see other images.
 
+
+
 ```python
 # Example of a picture
 index = 25
@@ -74,10 +76,13 @@ plt.imshow(train_set_x_orig[index])
 print ("y = " + str(train_set_y[:,index]) + ", it's a '" + classes[np.squeeze(train_set_y[:,index])].decode("utf-8") +  "' picture.")
 ```
 
-<img src="C:\Users\hyojung\AppData\Roaming\Typora\typora-user-images\image-20200217161441071.png" alt="image-20200217161441071" style="zoom: 50%;" />
+<img src="https://user-images.githubusercontent.com/56706812/74637887-3a26c480-51ae-11ea-99f0-6322007f4f24.png" alt="image-20200217161441071" style="zoom: 50%;" />
+
 
 
 Many software bugs in deep learning come from having matrix/vector dimensions that don't fit. If you can keep your matrix/vector dimensions straight you will go a long way toward eliminating many bugs.
+
+
 
 **Exercise:** Find the values for:
 
@@ -88,6 +93,8 @@ Many software bugs in deep learning come from having matrix/vector dimensions th
 \- num_px (= height = width of a training image)
 
 Remember that `train_set_x_orig` is a numpy-array of shape (m_train, num_px, num_px, 3). For instance, you can access `m_train` by writing `train_set_x_orig.shape[0]`.
+
+
 
 ```python
 ### START CODE HERE ### (≈ 3 lines of code)
@@ -115,6 +122,8 @@ train_set_y shape: (1, 209)
 test_set_x shape: (50, 64, 64, 3)
 test_set_y shape: (1, 50)
 
+
+
 **Expected Output for m_train, m_test and num_px**:
 
 | **m_train** | 209  |
@@ -123,6 +132,8 @@ test_set_y shape: (1, 50)
 | **num_px**  |  64  |
 
 or convenience, you should now reshape images of shape (num_px, num_px, 3) in a numpy-array of shape (num_px ![$*$](https://render.githubusercontent.com/render/math?math=%2A&mode=inline) num_px ![$*$](https://render.githubusercontent.com/render/math?math=%2A&mode=inline) 3, 1). After this, our training (and test) dataset is a numpy-array where each column represents a flattened image. There should be m_train (respectively m_test) columns.
+
+
 
 **Exercise:** Reshape the training and test data sets so that images of size (num_px, num_px, 3) are flattened into single vectors of shape (num_px ![$*$](https://render.githubusercontent.com/render/math?math=%2A&mode=inline) num_px ![$*$](https://render.githubusercontent.com/render/math?math=%2A&mode=inline) 3, 1).
 
@@ -153,6 +164,8 @@ test_set_x_flatten shape: (12288, 50)
 test_set_y shape: (1, 50) 
 sanity check after reshaping: [17 31 56 22 33]
 
+
+
 **Expected Output**:
 
 |  **train_set_x_flatten shape**   |   (12288, 209)   |
@@ -173,6 +186,8 @@ train_set_x = train_set_x_flatten / 255.
 test_set_x = test_set_x_flatten / 255.
 ```
 
+
+
 Common steps for pre-processing a new dataset are:
 
 - Figure out the dimensions and shapes of the problem (m_train, m_test, num_px, ...)
@@ -187,7 +202,9 @@ It's time to design a simple algorithm to distinguish cat images from non-cat im
 
 You will build a Logistic Regression, using a Neural Network mindset. The following Figure explains why **Logistic Regression is actually a very simple Neural Network!**
 
-<img src="C:\Users\hyojung\AppData\Roaming\Typora\typora-user-images\image-20200217162324705.png" alt="image-20200217162324705" style="zoom:80%;" />
+<img src="https://user-images.githubusercontent.com/56706812/74637980-6c382680-51ae-11ea-84ee-59d233cbd3e7.png" alt="image-20200217162324705" style="zoom:67%;" />
+
+
 
 **Key steps**: In this exercise, you will carry out the following steps:
 
@@ -212,6 +229,8 @@ The main steps for building a Neural Network are:
    - Update parameters (gradient descent)
 
 You often build 1-3 separately and integrate them into one function we call `model()`.
+
+
 
 ### 4.1 - Helper functions
 
@@ -250,6 +269,8 @@ print ("sigmoid(9.2) = " + str(sigmoid(9.2)))
 |  **sigmoid(0)**  |      0.5       |
 | :--------------: | :------------: |
 | **sigmoid(9.2)** | 0.999898970806 |
+
+
 
 ### 4.2 - Initializing parameters
 
@@ -298,6 +319,8 @@ b = 0
 | **b** |       0       |
 
 For image inputs, w will be of shape (num_px ![$\times$](https://render.githubusercontent.com/render/math?math=%5Ctimes&mode=inline) num_px ![$\times$](https://render.githubusercontent.com/render/math?math=%5Ctimes&mode=inline) 3, 1).
+
+
 
 ### 4.3 - Forward and Backward propagation
 
@@ -383,6 +406,8 @@ cost = 6.00006477319
 | :------: | :---------------------------: |
 |  **db**  |        0.499935230625         |
 | **cost** |       6.000064773192205       |
+
+
 
 ### d) Optimization
 
@@ -480,6 +505,8 @@ db = 0.430462071679
 | **dw** | [[ 0.90158428] [ 1.76250842]] |
 | **db** |        0.430462071679         |
 
+
+
 **Exercise:** The previous function will output the learned w and b. We are able to use w and b to predict the labels for a dataset X. Implement the `predict()` function. There is two steps to computing predictions:
 
 1. Calculate ![$\hat{Y} = A = \sigma(w^T X + b)$](https://render.githubusercontent.com/render/math?math=%5Chat%7BY%7D%20%3D%20A%20%3D%20%5Csigma%28w%5ET%20X%20%2B%20b%29&mode=inline)
@@ -539,6 +566,8 @@ predictions=[[ 1. 1.]]
   - computing the cost and its gradient
   - updating the parameters using gradient descent
 - Use the learned (w,b) to predict the labels for a given set of examples
+
+
 
 ## 5 - Merge all functions into a model
 
@@ -651,7 +680,7 @@ print ("y = " + str(test_set_y[0, index]) + ", you predicted that it is a \"" + 
 
 y = 1, you predicted that it is a "cat" picture.
 
-![image-20200217170036326](C:\Users\hyojung\AppData\Roaming\Typora\typora-user-images\image-20200217170036326.png)
+![image-20200217170036326](https://user-images.githubusercontent.com/56706812/74638110-a43f6980-51ae-11ea-8ecc-b1a54f9afe25.png)
 
 Let's also plot the cost function and the gradients.
 
@@ -665,7 +694,7 @@ plt.title("Learning rate =" + str(d["learning_rate"]))
 plt.show()
 ```
 
-<img src="C:\Users\hyojung\AppData\Roaming\Typora\typora-user-images\image-20200217164558335.png" alt="image-20200217164558335" style="zoom: 50%;" />
+<img src="https://user-images.githubusercontent.com/56706812/74638284-f8e2e480-51ae-11ea-8399-825c6d39d635.png" alt="image-20200217164558335" style="zoom:67%;" />
 
 **Interpretation**: You can see the cost decreasing. It shows that the parameters are being learned. However, you see that you could train the model even more on the training set. Try to increase the number of iterations in the cell above and rerun the cells. You might see that the training set accuracy goes up, but the test set accuracy goes down. This is called overfitting.
 
@@ -719,7 +748,9 @@ test accuracy: 36.0 %
 
 -------------------------------------------------------
 
-<img src="C:\Users\hyojung\AppData\Roaming\Typora\typora-user-images\image-20200217164716342.png" alt="image-20200217164716342" style="zoom: 50%;" />
+<img src="https://user-images.githubusercontent.com/56706812/74638310-08622d80-51af-11ea-8050-299e32985ca7.png" alt="image-20200217164716342" style="zoom:67%;" />
+
+
 
 **Interpretation**:
 
@@ -729,6 +760,8 @@ test accuracy: 36.0 %
 - In deep learning, we usually recommend that you:
   - Choose the learning rate that better minimizes the cost function.
   - If your model overfits, use other techniques to reduce overfitting. (We'll talk about this in later videos.)
+
+
 
 ## 7 - Test with your own image (optional/ungraded exercise)
 
@@ -756,11 +789,17 @@ print("y = " + str(np.squeeze(my_predicted_image)) + ", your algorithm predicts 
 
 y = 0.0, your algorithm predicts a "non-cat" picture.
 
-<img src="C:\Users\hyojung\AppData\Roaming\Typora\typora-user-images\image-20200217164842934.png" alt="image-20200217164842934" style="zoom:50%;" />
+<img src="https://user-images.githubusercontent.com/56706812/74638361-1a43d080-51af-11ea-8dca-90224d4255ad.png" alt="image-20200217164842934" style="zoom: 50%;" />
+
+
 
 1. Preprocessing the dataset is important.
+
 2. You implemented each function separately: initialize(), propagate(), optimize(). Then you built a model().
+
 3. Tuning the learning rate (which is an example of a "hyperparameter") can make a big difference to the algorithm. You will see more examples of this later in this course!
+
+   
 
 Finally, if you'd like, we invite you to try different things on this Notebook. Make sure you submit before trying anything. Once you submit, things you can play with include:
 
@@ -769,6 +808,8 @@ Finally, if you'd like, we invite you to try different things on this Notebook. 
 \- Try different initialization methods and compare the results
 
 \- Test other preprocessings (center the data, or divide each row by its standard deviation)
+
+
 
 Bibliography:
 
